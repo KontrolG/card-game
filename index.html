@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="German Solano">
+  <meta name="description" content="Pequeño projecto realizadon en Javascript para poner en practica los conocimientos relacionados con objetos, prototipos y clausuras.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="statics/css/styles.css">
+  <title>javaScript UNO</title>
+</head>
+<body>
+  <div class="contenedor">
+    <center>
+      <img src="/statics/img/Logo.png" alt="" height="100px">
+    </center><br>
+      <!-- <ul class="botones">
+        <li><button>Iniciar</button></li>
+        <li><button class="reiniciar">Reiniciar</button></li>
+      </ul> -->
+    
+    <div class="tablero">
+      <div class="overlap">
+        <h2>
+          ¡BIENVENIDO!
+        </h2>
+        <p>
+          Pulsa 'JUGAR' para iniciar el juego.
+        </p>
+        <button class="jugar">JUGAR</button>
+      </div>
+      <div class="direccion">
+        <img src="statics/img/flecha.png" alt="direccion" class="flecha" id="flecha1" style="transform: rotateY(0deg) rotateX(0deg)">
+        <img src="statics/img/flecha.png" alt="direccion" class="flecha" id="flecha2" style="transform: rotateY(180deg) rotateX(180deg); margin-left: -15px;">
+      </div>
+      <div class="mazos">
+        <img src="statics/img/hide.png" class="carta" id="mazo">
+        <span id="descartes"></span><br>
+      </div>
+
+      <div class="panel" id="panel-jugador-0">
+        <div class="selector-colores ocultar oculto" id="selector-jugador-0">
+          <div class="verde"></div>
+          <div class="amarillo"></div>
+          <div class="azul"></div>
+          <div class="rojo"></div>
+        </div>
+        <div class="mano" id="mano-jugador-0"></div>
+        <div class="nombre" id="nombre-jugador-0">German: <span id="puntuacion-0">0</span></div>
+      </div>
+
+      <div class="panel" id="panel-jugador-1">
+        <div class="selector-colores ocultar oculto" id="selector-jugador-1">
+          <div class="verde"></div>
+          <div class="amarillo"></div>
+          <div class="azul"></div>
+          <div class="rojo"></div>
+        </div>
+        <div class="mano" id="mano-jugador-1"></div>
+        <div class="nombre" id="nombre-jugador-1">CPU 1: <span id="puntuacion-1">0</span></div>
+      </div>
+
+      <div class="panel" id="panel-jugador-2">
+        <div class="selector-colores ocultar oculto" id="selector-jugador-2">
+          <div class="verde"></div>
+          <div class="amarillo"></div>
+          <div class="azul"></div>
+          <div class="rojo"></div>
+        </div>
+        <div class="mano" id="mano-jugador-2"></div>
+        <div class="nombre" id="nombre-jugador-2">CPU 2: <span id="puntuacion-2">0</span></div>
+      </div>
+      
+      <div class="panel" id="panel-jugador-3">
+        <div class="selector-colores ocultar oculto" id="selector-jugador-3">
+          <div class="verde"></div>
+          <div class="amarillo"></div>
+          <div class="azul"></div>
+          <div class="rojo"></div>
+        </div>
+        <div class="mano" id="mano-jugador-3"></div>
+        <div class="nombre" id="nombre-jugador-3">CPU 3: <span id="puntuacion-3">0</span></div>
+      </div>
+
+      <div class="ayuda">
+        <h3>Titulo</h3>
+        <div class="cerrar-ayuda">x</div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, velit dolorum. Harum ea iure a.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="statics/js/Reglas.js"></script>
+<script src="statics/js/Carta.js"></script>
+<script src="statics/js/Mazo.js"></script>
+<script src="statics/js/Jugador.js"></script>
+<script src="statics/js/app.js"></script>
+<script src="statics/js/CPU.js"></script>
+</html>
