@@ -2,16 +2,14 @@
   body {
     font-size: 14px;
   }
-  .ayuda {
-    font-size: 80%;
-  }
+
   .logo {
     margin-top: 35px;
     margin-bottom: 35px;
   }
 
   #panel-jugador-1 {
-    left: 6vw;
+    left: 9%;
   }
   
 
@@ -30,7 +28,7 @@
 
 @media only screen and (max-width: 1023px) {
   #panel-jugador-1 {
-    left: 7vw;
+    left: 10%;
   }
 
   #panel-jugador-3 {

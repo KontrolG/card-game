@@ -82,6 +82,8 @@ body {
   top: 100%;
   transform: translate(4%, -110%);
   opacity: 0.97;
+  font-size: 90%;
+  overflow: hidden;
   border-radius: 7px;
   background: linear-gradient(
     to bottom,
@@ -92,8 +94,8 @@ body {
   );
   box-shadow: 5px 5px 5px;
   height: 27%;
-  width: 27%;
-  padding: 10px 10px 0px 10px;
+  width: 33%;
+  padding: 10px 20px 0px 10px;
   transition: opacity 0.5s linear 0s;
 }
 
