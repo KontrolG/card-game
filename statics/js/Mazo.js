@@ -147,6 +147,7 @@ const mazo = (function() {
     return carta;
   }
 
+  /* El jugador puede clickear el mazo y hacer a los contrincantes tomar cartas */
   async function pescar() {
     if (juego.estadoActual === 3)
       await juego.obtenerJugadorActivo().tomarCarta();

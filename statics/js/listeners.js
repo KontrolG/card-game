@@ -4,7 +4,7 @@ $(".jugar").addEventListener("click", juego.jugar.bind(juego));
 
 app.cerrarAyuda.addEventListener("click", () => app.esconder(app.ayuda));
 
-$("#mazo").addEventListener("click", mazo.pescarCarta);
+$("#mazo").addEventListener("click", () => {if (!juego.obtenerJugadorActivo().esCPU()) mazo.pescarCarta()});
 
 app.ayuda.addEventListener("mouseenter", app.mantenerAyuda);
 

@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: 'LatoRegular';
-  src: url(/statics/fuentes/Lato-Regular.ttf) format(ttf);
+  src: url(../fuentes/Lato-Regular.ttf) format(ttf);
   font-weight: normal;
   font-style: normal;
 }

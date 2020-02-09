@@ -13,6 +13,7 @@
   #panel-jugador-1 {
     left: 6vw;
   }
+  
 
   .direccion {
     width: 20vw;
@@ -32,12 +33,19 @@
     left: 7vw;
   }
 
+  #panel-jugador-3 {
+    left: 49.4%;
+  }
+
   .overlap > h2 {
     margin-top: 34.5%;
   }
 }
 
 @media only screen and (max-width: 767px) {
+  body {
+    font-size: 12px;
+  }
   .overlap > h2 {
     margin-top: 48%;
   }
@@ -52,11 +60,12 @@
     margin-bottom: 25px;
     height: 70px;
   }
+
   .mano > img {
-    margin-left: 10px;
+    margin-left: 15px;
   }
   .mano img:not([src*="oculto.png"]):hover {
-    margin-left: 10px;
+    margin-left: 15px;
   }
 
   .selector-colores {
