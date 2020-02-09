@@ -1,118 +1,184 @@
-function indiceAleatorio() { return Math.floor(Math.random() * mazo.length) };
-var mazo = [];
-var descartes = [];
-var colores = ["verde", "rojo", "amarillo", "azul"];
+"use strict";
 
-function crearMazo() {
-  mazo = [];
-  descartes = [];
-  var descartesDOM = $("#descartes");
-  if (descartesDOM.childElementCount) {
-    descartesDOM.removeChild(descartesDOM.lastChild);
+const mazo = (function() {
+  const mazo = [];
+  let descartes;
+  const descartesDOM = $("#descartes");
+
+  function indiceAleatorio() {
+    return Math.floor(Math.random() * mazo.length);
   }
-  for (let indice = 0; indice < colores.length; indice++) {
+
+  function quitarDescarte() {
+    descartes = [];
+    if (descartesDOM.childElementCount) {
+      descartesDOM.removeChild(descartesDOM.lastChild);
+    }
+  }
+
+  function generarCartasNormales(color) {
     for (let numero = 0; numero < 10; numero++) {
-      mazo.push(new Carta("normal", colores[indice], numero))
+      mazo.push(new Carta("normal", color, numero));
       if (numero) {
-        mazo.push(new Carta("normal", colores[indice], numero))
+        mazo.push(new Carta("normal", color, numero));
       }
     }
-    mazo.push(new Carta("accion", colores[indice], "+2"));
-    mazo.push(new Carta("accion", colores[indice], "+2"));
-    mazo.push(new Carta("accion", colores[indice], "reversa"));
-    mazo.push(new Carta("accion", colores[indice], "reversa"));
-    mazo.push(new Carta("accion", colores[indice], "pierdeTurno"));
-    mazo.push(new Carta("accion", colores[indice], "pierdeTurno"));
-
-    mazo.push(new Carta("comodin", "negro", "+4"))
-    mazo.push(new Carta("comodin", "negro", "cambiaColor"))
   }
-  barajar();
-}
 
-async function barajar() {
-  Juego.estadoActual++;
-  mostrarAyuda(Juego.estados[Juego.estadoActual], "");
-  revolverMazo();
-  mezclar();
-  await esperar(4000);
-  repartir();
-    
-}
-
-function mezclar() {
-  mazo.sort(indiceAleatorio); 
-  mazo.sort(indiceAleatorio); 
-  mazo.sort(indiceAleatorio); 
-  mazo.sort(indiceAleatorio); 
-}
-
-async function revolverMazo() {
-  $("#mazo").style.animation = "mezclar 4s linear";
-  await esperar(4000);
-  $("#mazo").style.animation = "";
-}
-
-function reponerMazo() {
-  mazo = descartes;
-  descartes = [mazo[(mazo.length) - 1]];
-  barajar();
-}
-
-function puedeJugar(jugador) {
-  const cartasJugador = jugador.cartas;
-  return cartasJugador.reduce((estadoInicial, carta) => {
-    return carta.puedeLanzar(cartasJugador) ? true : estadoInicial;
-  }, false);
-}
-
-function tomarCarta(jugador) {
-  if (!puedeJugar(jugador)) {
-    darCarta(jugador);
-    if (!puedeJugar(jugador)) {
-      Juego.siguienteJugador(); 
-    }
-  } else {
-    mostrarAyuda("No puedes tomar otra carta", "Ya posees en tu mano una carta que puedes jugar.")
-  }
-}
-
-function darCarta(jugador) {
-    new Audio("statics/sounds/darCartaW.mp3").play();
-    carta = mazo.pop();
-    jugador.cartas.push(carta);
-    $("#mano-jugador-" + jugador.numero).appendChild(generarCarta(carta, jugador));
-}
-
-async function repartir() {
-  const { jugadores } = Juego;
-  Juego.estadoActual++;
-  mostrarAyuda(Juego.estados[Juego.estadoActual], "");
-  for (let index = 0; index < 7; index++) {
-    for (let index = 0; index < jugadores.length; index++) {
-      darCarta(jugadores[index]);
-      await esperar(200);
+  function generarCartasDeAccion(color) {
+    for (let cantidad = 0; cantidad < 2; cantidad++) {
+      mazo.push(new Carta("accion", color, "+2"));
+      mazo.push(new Carta("accion", color, "reversa"));
+      mazo.push(new Carta("accion", color, "pierdeTurno"));
     }
   }
-  await esperar(200);
-  voltearUltima();
-}
 
-function voltearUltima() {
-  new Audio("statics/sounds/lanzarW.mp3").play();
-  carta = mazo.pop();
-  if (carta.valor === "+4") {
-    alert("Era un +4");
-    mazo.unshift(carta);
-    carta = mazo.pop();
+  function generarComodines() {
+    mazo.push(new Carta("comodin", "negro", "+4"));
+    mazo.push(new Carta("comodin", "negro", "cambiaColor"));
   }
-  $("#descartes").appendChild(generarCarta(carta));
-  descartes.push(carta);
-  Juego.estadoActual++;
-  Juego.alternarJugador();
-  Juego.siguienteJugador();
-  mostrarAyuda(Juego.estados[Juego.estadoActual], "Selecciona una carta de tu mano.");
-  if (carta.tipo !== "normal") {
-    carta.accion(Juego.jugadores[Juego.jugadorActivo]);
+
+  function generarCartas(color) {
+    generarCartasNormales(color);
+    generarCartasDeAccion(color);
+    generarComodines();
   }
-}
+
+  function construir() {
+    quitarDescarte();
+    for (const color of ["verde", "rojo", "amarillo", "azul"]) {
+      generarCartas(color);
+    }
+  }
+
+  async function barajar() {
+    juego.proceder();
+    revolver();
+    await app.mezclarMazo();
+  }
+
+  function revolver() {
+    for (let indice = 0; indice < mazo.length; indice++) {
+      const indiceNuevo = indiceAleatorio();
+      let temporal = mazo[indice];
+      [mazo[indice], mazo[indiceNuevo]] = [mazo[indiceNuevo], temporal];
+    }
+  }
+
+  function reponer() {
+    mazo.push(...descartes);
+    manejar();
+  }
+
+  async function repartirA(jugador) {
+    await darCarta(jugador);
+    await esperar(200);
+  }
+
+  async function unaPorJugador(jugadores) {
+    for (const jugador of jugadores) {
+      await repartirA(jugador);
+    }
+  }
+
+  async function repartirTodas(cantidad) {
+    const { jugadores } = juego;
+    for (let conteo = 0; conteo < cantidad; conteo++) {
+      await unaPorJugador(jugadores);
+    }
+  }
+
+  async function repartir() {
+    juego.proceder();
+    await repartirTodas(7);
+    await esperar(200);
+  }
+
+  function obtenerUltimaCarta() {
+    let carta = mazo.pop();
+    if (carta.valor === "+4") {
+      mazo.unshift(carta);
+      carta = mazo.pop();
+    }
+    return carta;
+  }
+
+  function reemplazar(carta) {
+    if (descartesDOM.childElementCount) {
+      descartesDOM.lastElementChild.remove();
+    }
+    descartesDOM.appendChild(carta);
+  }
+
+  function descartar(carta) {
+    reemplazar(carta.generar());
+    descartes.push(carta);
+  }
+
+  function finalizar(carta) {
+    if (!carta.esNormal()) juego.obtenerJugadorActivo().acciones[carta.valor]();
+    else juego.jugarTurno();
+  }
+
+  function voltearUltima() {
+    sonidos.lanzar.play();
+    let carta = obtenerUltimaCarta();
+    descartar(carta);
+    juego.comenzar();
+    finalizar(carta);
+  }
+
+  async function darCarta(jugador) {
+    await sonidos.darCarta().play();
+    const carta = mazo.pop();
+    jugador.añadirCarta(carta);
+  }
+
+  async function manejar() {
+    await barajar();
+    await repartir();
+    voltearUltima();
+  }
+
+  function cambiarCarta(valor) {
+    const carta = descartesDOM.firstElementChild;
+    const color = juego.colorTemporal.color;
+    carta.src = `statics/img/negro/${valor}-${color}.png`;
+    return carta;
+  }
+
+  async function pescar() {
+    if (juego.estadoActual === 3)
+      await juego.obtenerJugadorActivo().tomarCarta();
+    else Reglas.enEspera();
+  }
+
+  return {
+    test: function() {
+      return mazo;
+    },
+
+    preparar: async () => {
+      construir();
+      manejar();
+    },
+
+    darCarta: darCarta,
+
+    descartar: descartar,
+
+    ultimoDescarte: () => {
+      return descartes[descartes.length - 1];
+    },
+
+    async pescarCarta() {
+      if (mazo.length === 0) reponer();
+      else await pescar();
+    },
+
+    cambiarColor(valor) {
+      const carta = cambiarCarta(valor);
+      reemplazar(carta);
+    }
+  };
+})();

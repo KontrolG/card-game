@@ -1,0 +1,71 @@
+@media only screen and (max-width: 1200px) {
+  body {
+    font-size: 14px;
+  }
+  .ayuda {
+    font-size: 80%;
+  }
+  .logo {
+    margin-top: 35px;
+    margin-bottom: 35px;
+  }
+
+  #panel-jugador-1 {
+    left: 6vw;
+  }
+
+  .direccion {
+    width: 20vw;
+    left: 54%;
+    top: 54%;
+  }
+  .flecha {
+    width: 75%;
+  }
+  .overlap > h2 {
+    margin-top: 30%;
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+  #panel-jugador-1 {
+    left: 7vw;
+  }
+
+  .overlap > h2 {
+    margin-top: 34.5%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .overlap > h2 {
+    margin-top: 48%;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  .overlap h2 {
+    margin-top: 23%;
+  }
+  .logo {
+    margin-top: 10px;
+    margin-bottom: 25px;
+    height: 70px;
+  }
+  .mano > img {
+    margin-left: 10px;
+  }
+  .mano img:not([src*="oculto.png"]):hover {
+    margin-left: 10px;
+  }
+
+  .selector-colores {
+    top: 3%;
+    width: 60px;
+    height: 60px;
+  }
+
+  .cerrar-ayuda {
+    padding-top: 2.5px;
+  }
+}

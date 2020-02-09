@@ -1,3 +1,4 @@
+"use strict";
 /*
 Para la CPU:
 Evaluar los siguientes aspectos de la mano del jugador
@@ -5,89 +6,144 @@ Evaluar los siguientes aspectos de la mano del jugador
 2.- Cartas que puede jugar esta ronda.
 3.- Cartas normales, de acción y comodines. 
 */
-'use strict';
-
-const CPU = (() => {
-  
-  const puntosPorTipo = {
-    "normal": 0.25,
-    "accion": 0.75,
-    "comodin": 1,
+class CPU extends Jugador {
+  constructor(numero) {
+    super(`CPU ${numero}`, numero);
+    this.puntosPorTipo = {
+      normal: 0.25,
+      accion: 0.75,
+      comodin: 1
+    };
   }
 
-  function contarColores(cartasJugador) {
-    const cartasPorColor = cartasJugador.reduce((prev, cur) => {
-      for (let index = 0; index < prev.length; index++) {
-        prev[index][1] += prev[index][0] === cur.color ? 1 : 0;
-      }
-      return prev;
-    }, [["verde", 0], ["amarillo", 0], ["azul", 0], ["rojo", 0]])
-    
-    cartasPorColor.sort((a, b) => a[1] < b[1]);
-    return cartasPorColor;
+  ordenarPorPuntuacion(arreglo) {
+    return arreglo.sort((a, b) => a[1] < b[1]);
   }
 
-  function puntuacionPorColor(cartasJugador, carta) {
-    const coloresEnMano = contarColores(cartasJugador);
-    let posicionColor = coloresEnMano.findIndex(([color, cantidad]) => carta.color === color && cantidad > 0);
-    posicionColor = posicionColor < 0 ? 4 : posicionColor;
-    return 1 - posicionColor * 0.25;
+  jugarTurno() {
+    const [carta] = this.obtenerPrimeraOpcion();
+    carta.lanzar();
+    if (this.esperandoColor()) this.seleccionarColor();
   }
 
-  function calcularPuntaje(cartasJugador, carta) {
-    let puntaje = puntuacionPorColor(cartasJugador, carta);
-    puntaje += puntosPorTipo[carta.tipo];
-    return carta.puedeLanzar(cartasJugador) ? puntaje : 0;
-  }  
+  obtenerCartasPosibles() {
+    return this.cartas.map((carta, indice) => [
+      carta,
+      this.calcularPuntaje(indice)
+    ]);
+  }
 
-  function obtenerPrimeraOpcion({cartas}) {
-    const posiblesCartas = cartas.map(carta => [carta, calcularPuntaje(cartas, carta)]);
-    posiblesCartas.sort((a, b) => a[1] < b[1]);
+  noEsBuenaOpcion(carta, cartas) {
+    return carta.valor === "cambiaColor" || !carta.puedeLanzar(cartas);
+  }
+
+  conseguirOtraOpcion(primeraOpcion, posiblesCartas, cartas) {
+    return posiblesCartas.find(([carta]) => {
+      return carta !== primeraOpcion[0] ? carta.puedeLanzar(cartas) : false;
+    });
+  }
+
+  buscarMejor(primeraOpcion, posiblesCartas, cartas) {
+    const otraOpcion = this.conseguirOtraOpcion(
+      primeraOpcion,
+      posiblesCartas,
+      cartas
+    );
+    return otraOpcion ? otraOpcion : primeraOpcion;
+  }
+
+  elegirOpcion(posiblesCartas, cartas) {
     let primeraOpcion = posiblesCartas[0];
-    if (primeraOpcion[0].valor === "cambiaColor" || !primeraOpcion[0].puedeLanzar(cartas)) {
-      const otraOpcion = posiblesCartas.find(([carta]) => {
-        return carta !== primeraOpcion[0] ? carta.puedeLanzar(cartas) : false;
-      });
-  
-      primeraOpcion = otraOpcion ? otraOpcion : primeraOpcion;
-    }
-
+    if (this.noEsBuenaOpcion(primeraOpcion[0], cartas))
+      primeraOpcion = this.buscarMejor(primeraOpcion, posiblesCartas, cartas);
     return primeraOpcion;
   }
 
-  async function seleccionarColor(jugador) {
-    const colorMasRepetido = contarColores(jugador.cartas)[0][0];
-    const cuadroColor = $(`#selector-jugador-${jugador.numero} .${colorMasRepetido}`);
-    await esperar(1000);
-    cuadroColor.classList.add("hover");
-    await esperar(1000);
-    cuadroColor.click();
-    await esperar(1000);
-    cuadroColor.classList.remove("hover");
+  obtenerPrimeraOpcion() {
+    const { cartas } = this;
+    const posiblesCartas = this.obtenerCartasPosibles();
+    this.ordenarPorPuntuacion(posiblesCartas);
+    return this.elegirOpcion(posiblesCartas, cartas);
   }
 
-  function jugarTurno(jugador) {
-    const [carta] = obtenerPrimeraOpcion(jugador);
-    carta.lanzar();
-    if ($("#selector-jugador-" + jugador.numero).classList.contains("mostrarSelector")) {
-      seleccionarColor(jugador);
+  calcularPuntaje(indice) {
+    const carta = this.cartas[indice];
+    let puntaje = this.puntuacionPorColor(carta);
+    puntaje += this.puntosPorTipo[carta.tipo];
+    return carta.puedeLanzar(this.cartas) ? puntaje : 0;
+  }
+
+  posicionPorColor(carta) {
+    const coloresEnMano = this.contarColores();
+    const posicion = coloresEnMano.findIndex(
+      ([color, cantidad]) => carta.color === color && cantidad > 0
+    );
+    return posicion < 0 ? 4 : posicion;
+  }
+
+  puntuacionPorColor(carta) {
+    const posicionColor = this.posicionPorColor(carta);
+    return 1 - posicionColor * 0.25;
+  }
+
+  evaluarColor(colores, carta) {
+    for (const color of colores) color[1] += color[0] === carta.color ? 1 : 0;
+    return colores;
+  }
+
+  contarColores() {
+    const cartasPorColor = this.cartas.reduce(this.evaluarColor, [
+      ["verde", 0],
+      ["amarillo", 0],
+      ["azul", 0],
+      ["rojo", 0]
+    ]);
+
+    return this.ordenarPorPuntuacion(cartasPorColor);
+  }
+
+  esperandoColor() {
+    return this.selector.classList.contains("mostrarSelector");
+  }
+
+  async alternarCuadro(cuadroColor) {
+    await esperar(1000);
+    cuadroColor.classList.toggle("hover");
+  }
+
+  async cambiarColorTemporal(cuadroColor) {
+    await esperar(1000);
+    juego.cambiarColorTemporal(cuadroColor.classList[0]);
+  }
+
+  async seleccionarCuadro(cuadroColor) {
+    await this.alternarCuadro(cuadroColor);
+    await this.cambiarColorTemporal(cuadroColor);
+    await this.alternarCuadro(cuadroColor);
+  }
+
+  async seleccionarColor() {
+    const colorMasRepetido = this.contarColores(this.cartas)[0][0];
+    const cuadroColor = $(
+      `#selector-jugador-${this.numero} .${colorMasRepetido}`
+    );
+    await this.seleccionarCuadro(cuadroColor);
+  }
+
+  async revisarMano() {
+    if (!this.puedeJugar()) {
+      await mazo.pescarCarta();
+      await esperar(1000);
+    }
+    if (this.puedeJugar()) {
+      this.jugarTurno();
     }
   }
 
-  return {
-    jugar: async () => {
-      const jugador = Juego.jugadores[Juego.jugadorActivo];
-      if (jugador.nombre !== "German") {
-        if (puedeJugar(jugador)) {
-          jugarTurno(jugador);
-        } else {
-          pescarCarta();
-          if (puedeJugar(jugador)) {
-            await esperar(1000);
-            jugarTurno(jugador);
-          }
-        }
-      }
+  async jugar() {
+    await juego.puedeContinuar();
+    if (this.estaActivo()) {
+      await this.revisarMano();
     }
   }
-})();
+}
