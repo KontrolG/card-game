@@ -1,14 +1,14 @@
+@font-face {
+  font-family: 'LatoRegular';
+  src: url(../fuentes/Lato-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-@font-face {
-  font-family: 'LatoRegular';
-  src: url(../fuentes/Lato-Regular.ttf) format(ttf);
-  font-weight: normal;
-  font-style: normal;
 }
 
 body {
@@ -20,7 +20,7 @@ body {
     url(../img/fondo.jpg);
   background-size: cover;
   background-position: center;
-  font-family: 'LatoRegular', 'Lato', Arial, Helvetica, sans-serif;
+  font-family: 'LatoRegular', Arial, Helvetica, sans-serif;
   overflow: hidden;
   font-size: 16px;
 }
