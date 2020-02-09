@@ -14,10 +14,10 @@
 body {
   background: radial-gradient(
       circle farthest-side at center,
-      rgba(150, 0, 0, 0.4),
-      rgba(150, 0, 0, 0.6)
+      rgba(150, 0, 0, 0.6),
+      rgba(150, 0, 0, 0.8)
     ),
-    url(/statics/img/fondo.jpg);
+    url(../img/fondo.jpg);
   background-size: cover;
   background-position: center;
   font-family: 'LatoRegular', 'Lato', Arial, Helvetica, sans-serif;
@@ -35,7 +35,7 @@ body {
 .tablero {
   position: relative;
   height: 82%;
-  background-image: url(/statics/img/tablero.png);
+  background-image: url(../img/tablero.png);
   background-position: center;
   background-size: cover;
   margin: 7% auto;
@@ -244,7 +244,7 @@ button:hover {
 
 #panel-jugador-1 {
   top: 50%;
-  left: 9.9%;
+  left: 10%;
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
