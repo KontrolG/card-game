@@ -116,13 +116,17 @@ const mazo = (function() {
   }
 
   function finalizar(carta) {
-    if (!carta.esNormal()) juego.obtenerJugadorActivo().acciones[carta.valor]();
+    if (carta.esDeAccion()) juego.obtenerJugadorActivo().acciones[carta.valor]();
+    else if(carta.esComodin()) {
+      juego.obtenerJugadorActivo().acciones[carta.valor]();
+      juego.jugarTurno()
+    }
     else juego.jugarTurno();
   }
 
   function voltearUltima() {
     sonidos.lanzar.play();
-    let carta = obtenerUltimaCarta();
+    const carta = obtenerUltimaCarta();
     descartar(carta);
     juego.comenzar();
     finalizar(carta);
@@ -147,7 +151,6 @@ const mazo = (function() {
     return carta;
   }
 
-  /* El jugador puede clickear el mazo y hacer a los contrincantes tomar cartas */
   async function pescar() {
     if (juego.estadoActual === 3)
       await juego.obtenerJugadorActivo().tomarCarta();

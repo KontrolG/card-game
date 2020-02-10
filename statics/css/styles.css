@@ -27,18 +27,18 @@ body {
 
 .contenedor {
   height: 100vh;
-  width: 66%;
+  width: 55%;
   margin: auto;
   padding: 0;
 }
 
 .tablero {
   position: relative;
-  height: 82%;
+  height: 72%;
   background-image: url(../img/tablero.png);
   background-position: center;
   background-size: cover;
-  margin: 7% auto;
+  margin: 12.5% auto;
   border-radius: 10px;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.2);
 }
@@ -178,18 +178,34 @@ button:hover {
   transition: transform 0.3s linear 0s;
 }
 
-.mano img:not([src*="oculto.png"]):hover {
+.activo .mano img:not([src*="oculto.png"]):hover {
   box-shadow: 0px 0px 7px 7px rgba(255, 255, 100, 0.8);
   z-index: 1;
   margin-left: 5px;
 }
 
 .activo {
+  opacity: 1 !important;
+}
+
+.activo .mano {
   background: radial-gradient(
     ellipse farthest-side at bottom,
     rgba(255, 255, 255, 1),
     transparent
   );
+}
+
+.activo .nombre {
+  color: #fff;
+}
+
+.nombre p {
+  margin-left: 30%;
+  width: 40%;
+}
+.activo .nombre p {
+  border-bottom: 2px solid #ffd700;
 }
 
 .direccion {
@@ -228,8 +244,14 @@ button:hover {
   margin-left: 0px;
 }
 
+.nombre img {
+    height: 20px;
+    width: 20px;
+}
+
 .panel {
   position: absolute;
+  opacity: 0.5;
   width: 80%;
   height: 50%;
   color: #fff;
@@ -246,14 +268,22 @@ button:hover {
 
 #panel-jugador-1 {
   top: 50%;
-  left: 10%;
+  left: 10.3%;
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
 #panel-jugador-2 {
   top: 15.3%;
-  left: 50%;
+  left: 49.9%;
   transform: translate(-50%, -50%) rotate(180deg);
+}
+
+#panel-jugador-1 .nombre {
+  transform: translate(-50%, 0%) rotate(-90deg);
+}
+
+#panel-jugador-3 .nombre {
+  transform: translate(-50%, 0%) rotate(90deg);
 }
 
 #panel-jugador-2 .nombre {
@@ -262,22 +292,22 @@ button:hover {
 
 #panel-jugador-3 {
   top: 50%;
-  left: 50.9%;
+  left: 49.9%;
   transform: translate(0%, -50%) rotate(-90deg);
 }
 
 .nombre {
   text-align: center;
   position: relative;
+  color: #ccc;
   width: 200px;
-  top: 67%;
+  top: 63%;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .nombre span {
-  color: #ddd;
-  font-weight: 100;
+ font-weight: 100;
 }
 
 #panel-jugador-1 .nombre,
@@ -363,11 +393,11 @@ button:hover {
 @keyframes gritar {
   25% {
     top: 20%;
-    opacity: 0.9;
+    opacity: 1;
   }
   50% {
     top: 20%;
-    opacity: 0.9;
+    opacity: 1;
   }
   100% {
     top: 40%;

@@ -53,7 +53,7 @@ class Jugador {
   }
 
   cambiarEstado() {
-    this.mano.classList.toggle("activo");
+    this.panel.classList.toggle("activo");
   }
 
   verificarCartas(estadoInicial, carta, indice, cartas) {

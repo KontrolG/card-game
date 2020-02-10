@@ -110,11 +110,8 @@ class Carta {
   }
 
   obtenerPuntos() {
-    if (this.esDeAccion()) {
-      return 20;
-    } else if (this.esComodin()) {
-      return 50;
-    }
+    if (this.esDeAccion()) return 20;
+    else if (this.esComodin()) return 50;
     return 0;
   }
 }

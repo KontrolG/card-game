@@ -135,12 +135,11 @@ class CPU extends Jugador {
       await mazo.pescarCarta();
       await esperar(1000);
     }
-    if (this.puedeJugar()) {
-      this.jugarTurno();
-    }
+    if (this.puedeJugar()) this.jugarTurno();
   }
 
   async jugar() {
+    if (this.esperandoColor()) await this.seleccionarColor();
     await juego.puedeContinuar();
     if (this.estaActivo()) {
       await this.revisarMano();

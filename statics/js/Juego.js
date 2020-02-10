@@ -5,7 +5,7 @@ Acciones <- ¿poder encadenar acciones?
 */
 
 const juego = {
-  jugadores: [new Jugador("German", 0), new CPU(1), new CPU(2), new CPU(3)],
+  jugadores: [new Jugador("German", 0), new CPU(1), new Jugador("Isaac", 2), new CPU(3)],
   estados: [
     "No iniciado",
     "Barajando...",
@@ -107,9 +107,8 @@ const juego = {
 
   jugarTurno() {
     const jugador = this.obtenerJugadorActivo();
-    if (jugador.esCPU()) {
-      jugador.jugar();
-    }
+    if (jugador.esCPU()) jugador.jugar();
+    else app.mostrarAyuda(`Es el turno de ${jugador.nombre}`, "Selecciona una carta para jugar.");
   },
 
   siguienteJugador() {
@@ -154,10 +153,10 @@ const juego = {
     this.finalizarTurno();
   },
 
-  comenzar() {
+  async comenzar() {
     this.estadoActual++;
     this.obtenerJugadorActivo().cambiarEstado();
-    app.mostrarAyuda(
+    await app.mostrarAyuda(
       "Empezó el juego",
       "Selecciona una carta de tu mano para lanzarla."
     );

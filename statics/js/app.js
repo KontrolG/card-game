@@ -36,9 +36,9 @@ const app = {
     await esperar(3000);
   },
 
-  mostrarAyuda(titulo, cuerpo) {
+  async mostrarAyuda(titulo, cuerpo) {
     this.modificarAyuda(titulo, cuerpo);
-    this.animacionMostrar(this.ayuda);
+    await this.animacionMostrar(this.ayuda);
   },
 
   modificarAyuda(titulo, cuerpo) {

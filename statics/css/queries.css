@@ -62,7 +62,7 @@
   .mano > img {
     margin-left: 15px;
   }
-  .mano img:not([src*="oculto.png"]):hover {
+  .activo .mano img:not([src*="oculto.png"]):hover {
     margin-left: 15px;
   }
 
