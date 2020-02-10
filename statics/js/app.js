@@ -80,9 +80,11 @@ const app = {
     selector.classList.contains("oculto")
       ? app.mostrar(selector)
       : app.esconder(selector);
+  },
+
+  preparar() {
+    for (const { nombre, identificador } of juego.jugadores) {
+      identificador.textContent = nombre;
+    };
   }
 };
-
-window.addEventListener("load", () => {
-  juego.mostrarEstado();
-});

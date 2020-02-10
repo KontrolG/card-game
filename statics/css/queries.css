@@ -7,10 +7,6 @@
     margin-top: 35px;
     margin-bottom: 35px;
   }
-
-  #panel-jugador-1 {
-    left: 9%;
-  }
   
 
   .direccion {
@@ -27,13 +23,6 @@
 }
 
 @media only screen and (max-width: 1023px) {
-  #panel-jugador-1 {
-    left: 10%;
-  }
-
-  #panel-jugador-3 {
-    left: 49.4%;
-  }
 
   .overlap > h2 {
     margin-top: 34.5%;
@@ -50,6 +39,20 @@
 }
 
 @media only screen and (max-height: 600px) {
+  body {
+    font-size: 12px;
+  }
+
+  .nombre p {
+    margin: 1px auto;
+    width: 35%;
+  }
+
+  .tablero {
+    width: 576px;
+    height: 360px;
+  }
+  
   .overlap h2 {
     margin-top: 23%;
   }

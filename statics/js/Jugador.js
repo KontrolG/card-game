@@ -7,6 +7,7 @@ class Jugador {
     this.panel = $(`#panel-jugador-${numero}`);
     this.selector = $(`#selector-jugador-${numero}`);
     this.mano = $(`#mano-jugador-${numero}`);
+    this.identificador = $(`#nombre-jugador-${numero} p`);
     this.puntuacion = $(`#puntuacion-${numero}`);
     this.cartas = [];
     this.puntos = 0;

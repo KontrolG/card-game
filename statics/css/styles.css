@@ -27,18 +27,19 @@ body {
 
 .contenedor {
   height: 100vh;
-  width: 55%;
+  width: 100vw;
   margin: auto;
   padding: 0;
 }
 
 .tablero {
   position: relative;
-  height: 72%;
+  height: 525px;
+  width: 840px;
   background-image: url(../img/tablero.png);
   background-position: center;
   background-size: cover;
-  margin: 12.5% auto;
+  margin: 6.5% auto;
   border-radius: 10px;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.2);
 }
@@ -61,7 +62,7 @@ body {
 }
 
 .overlap > h2 {
-  margin-top: 19.3%;
+  margin-top: 25%;
   margin-bottom: 0.5%;
 }
 
@@ -101,6 +102,7 @@ body {
 
 .ayuda h3 {
   float: left;
+  font-size: 130%;
 }
 
 .cerrar-ayuda {
@@ -120,22 +122,26 @@ body {
 .ayuda p {
   clear: both;
   margin-top: 30px;
+  font-size: 120%;
 }
 
 button {
   padding: 10px;
-  color: #aaa;
+  background: linear-gradient(
+    rgb(255,255,255),
+    rgb(235, 235, 235),
+    rgb(255,255,255)
+  );
+  color: #555;
   text-transform: uppercase;
-  background: none;
   border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
   transition: linear 0.2s;
 }
 
-button:hover {
-  border: 1px solid #fff;
-  color: #fff;
+button:hover, button:active, button:focus {
+  box-shadow: 0px 0px 10px 1px #ddd;
 }
 
 .mazos {
@@ -200,10 +206,6 @@ button:hover {
   color: #fff;
 }
 
-.nombre p {
-  margin-left: 30%;
-  width: 40%;
-}
 .activo .nombre p {
   border-bottom: 2px solid #ffd700;
 }
@@ -268,7 +270,7 @@ button:hover {
 
 #panel-jugador-1 {
   top: 50%;
-  left: 10.3%;
+  left: 9.8%;
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
@@ -292,7 +294,7 @@ button:hover {
 
 #panel-jugador-3 {
   top: 50%;
-  left: 49.9%;
+  left: 50.4%;
   transform: translate(0%, -50%) rotate(-90deg);
 }
 
@@ -306,13 +308,19 @@ button:hover {
   transform: translate(-50%, 0%);
 }
 
+.nombre p {
+  margin: 3px auto;
+  width: 45%;
+  border-bottom: 2px solid transparent;
+}
+
 .nombre span {
  font-weight: 100;
 }
 
 #panel-jugador-1 .nombre,
 #panel-jugador-3 .nombre {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .botones {
@@ -393,11 +401,11 @@ button:hover {
 @keyframes gritar {
   25% {
     top: 20%;
-    opacity: 1;
+    opacity: 0.9;
   }
   50% {
     top: 20%;
-    opacity: 1;
+    opacity: 0.9;
   }
   100% {
     top: 40%;
