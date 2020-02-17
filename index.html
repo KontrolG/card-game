@@ -112,6 +112,15 @@
         </div>
       </div>
     </div>
+    <script>
+      if (typeof window.queueMicrotask !== "function") {
+          window.queueMicrotask = function (callback) {
+            Promise.resolve()
+              .then(callback)
+              .catch(e => setTimeout(() => { throw e; }));
+          };
+        }
+    </script>
     <script src="statics/js/app.js"></script>
     <script src="statics/js/Sonidos.js"></script>
     <script src="statics/js/Reglas.js"></script>

@@ -33,7 +33,7 @@ class Jugador {
 
       "+4": async () => {
         await juego.accionComodin("+4");
-        juego.accionRobaCartas(4);
+        await juego.accionRobaCartas(4);
       },
 
       cambiaColor: () => {
@@ -108,6 +108,11 @@ class Jugador {
     this.panel.appendChild(grito);
     await esperar(4000);
     grito.remove();
+  }
+
+  configurar() {
+    this.configurarSelector();
+    this.configurarMano();
   }
 
   calcularPuntos() {

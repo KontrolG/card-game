@@ -68,8 +68,6 @@ class Carta {
     imagen.src = jugador.esCPU()
       ? `statics/img/oculto.png`
       : this.ruta(this.color, this.valor);
-    if (!jugador.esCPU() && jugador.nombre)
-      imagen.addEventListener("click", this.lanzar.bind(this));
     return imagen;
   }
 
@@ -105,8 +103,8 @@ class Carta {
     else Reglas.enEspera();
   }
 
-  localizarCarta(cartasJugador, Carta) {
-    return cartasJugador.indexOf(Carta);
+  localizarCarta(cartasJugador, carta) {
+    return cartasJugador.indexOf(carta);
   }
 
   obtenerPuntos() {
