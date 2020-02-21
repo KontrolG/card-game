@@ -6,20 +6,13 @@ Acciones <- ¿poder encadenar acciones?
 
 const juego = {
   jugadores: [new Jugador("Georgelyz", 0), new CPU(1), new CPU(2), new CPU(3)],
-  estados: [
-    "No iniciado",
-    "Barajando...",
-    "Repartiendo...",
-    "Jugando",
-    "Esperando"
-  ],
   jugadorActivo: 0,
-  estadoActual: 0,
+  estadoActual: "No iniciado",
   colorTemporal: false,
 
   async puedeContinuar() {
     await esperar(800);
-    await esperar(10, () => this.estadoActual === 3);
+    await esperar(10, () => this.estadoActual === "Jugando");
     await esperar(800);
   },
 
@@ -52,7 +45,7 @@ const juego = {
   },
 
   elegirColor(event) {
-    if (this.estadoActual === 4) {
+    if (this.estadoActual === "Esperando") {
       this.colorTemporal = new Carta(
         "temporal",
         event.target.classList[0],
@@ -76,19 +69,19 @@ const juego = {
   },
 
   jugar() {
-    if (this.estadoActual === 0) {
+    if (this.estadoActual === "No iniciado") {
       app.esconder($(".overlap"));
       this.inicializar();
     }
   },
 
-  proceder() {
-    this.estadoActual++;
+  proceder(estado) {
+    this.estadoActual = estado;
     this.mostrarEstado();
   },
 
   mostrarEstado() {
-    app.mostrarAyuda(this.estados[this.estadoActual], "");
+    app.mostrarAyuda(this.estadoActual, "");
   },
 
   cambiarSiguiente() {
@@ -110,8 +103,12 @@ const juego = {
     if (jugador.esCPU()) jugador.jugar();
     else {
       queueMicrotask(() => {
-        if (mazo.ultimoDescarte().valor !== "+4" &&this.estadoActual === 3) app.mostrarAyuda(`Es el turno de ${jugador.nombre}`, "Selecciona una carta para jugar.");
-      })
+        if (mazo.ultimoDescarte().valor !== "+4" && this.estadoActual === "Jugando")
+          app.mostrarAyuda(
+            `Es el turno de ${jugador.nombre}`,
+            "Selecciona una carta para jugar."
+          );
+      });
     }
   },
 
@@ -121,19 +118,19 @@ const juego = {
   },
 
   async accionRobaCartas(cantidad) {
-    if (this.estadoActual === 3) {
-      this.estadoActual = 4;
+    if (this.estadoActual === "Jugando") {
+      this.estadoActual = "Esperando";
       const jugadorQueRoba = this.obtenerJugadorActivo();
       await jugadorQueRoba.robarCartas(cantidad);
       this.siguienteJugador();
-      this.estadoActual = 3;
+      this.estadoActual = "Jugando";
     }
   },
 
   solicitarColor() {
-    this.estadoActual = 4;
+    this.estadoActual = "Esperando";
     app.mostrarAyuda(
-      this.estados[this.estadoActual],
+      this.estadoActual,
       "Selecciona un color para continuar."
     );
     app.alternarSelector();
@@ -142,7 +139,7 @@ const juego = {
   modificarColor(valor) {
     app.alternarSelector();
     mazo.cambiarColor(valor);
-    this.estadoActual = 3;
+    this.estadoActual = "Jugando";
   },
 
   finalizarTurno() {
@@ -158,7 +155,7 @@ const juego = {
   },
 
   async comenzar() {
-    this.estadoActual++;
+    this.estadoActual = "Jugando";
     this.obtenerJugadorActivo().cambiarEstado();
     await app.mostrarAyuda(
       "Empezó el juego",

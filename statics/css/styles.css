@@ -40,7 +40,7 @@ body {
   background-image: url(../img/tablero.png);
   background-position: center;
   background-size: cover;
-  margin: 6.5% auto;
+  margin: 13vh auto;
   border-radius: 10px;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.2);
 }

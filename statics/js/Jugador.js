@@ -42,6 +42,7 @@ class Jugador {
     };
   }
 
+
   limpiarMano() {
     while (this.mano.childElementCount) {
       this.mano.removeChild(this.mano.lastElementChild);
@@ -110,6 +111,29 @@ class Jugador {
     grito.remove();
   }
 
+  configurarSelector() {
+    this.selector.addEventListener("click", juego.elegirColor.bind(juego));
+  }
+
+  esCarta(elemento) {
+    return elemento.matches(".carta");
+  }
+
+  obtenerIndiceDeCartaEnMano(elemento) {
+    const elementosEnMano = [...this.mano.children];
+    return elementosEnMano.indexOf(elemento);
+  }
+
+  configurarMano(){
+    this.mano.addEventListener("click", evento => {
+      const elementoClickeado = evento.target;
+      if (this.esCarta(elementoClickeado)) {
+        const indice = this.obtenerIndiceDeCartaEnMano(elementoClickeado);
+        this.cartas[indice].lanzar();
+      }
+    });
+  }
+
   configurar() {
     this.configurarSelector();
     this.configurarMano();
@@ -152,7 +176,7 @@ class Jugador {
   ganoPartida() {
     Reglas.ganoPartida(this.nombre);
     this.cambiarEstado();
-    juego.estadoActual = 0;
+    juego.estadoActual = "No iniciado";
     this.modificarPuntaje();
   }
 

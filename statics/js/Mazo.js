@@ -52,7 +52,7 @@ const mazo = (function() {
   }
 
   async function barajar() {
-    juego.proceder();
+    juego.proceder("Barajando");
     revolver();
     await app.mezclarMazo();
   }
@@ -89,7 +89,7 @@ const mazo = (function() {
   }
 
   async function repartir() {
-    juego.proceder();
+    juego.proceder("Repartiendo");
     await repartirTodas(7);
     await esperar(200);
   }
@@ -152,7 +152,7 @@ const mazo = (function() {
   }
 
   async function pescar() {
-    if (juego.estadoActual === 3)
+    if (juego.estadoActual === "Jugando")
       await juego.obtenerJugadorActivo().tomarCarta();
     else Reglas.enEspera();
   }

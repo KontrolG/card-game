@@ -99,7 +99,7 @@ class Carta {
 
   lanzar() {
     const jugador = this.obtenerJugador();
-    if (juego.estadoActual === 3) this.comprobarJugador(jugador);
+    if (juego.estadoActual === "Jugando") this.comprobarJugador(jugador);
     else Reglas.enEspera();
   }
 
