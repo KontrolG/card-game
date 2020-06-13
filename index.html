@@ -1,134 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="author" content="German Solano" />
-    <meta
-      name="description"
-      content="Pequeño projecto realizadon en Javascript para poner en practica los conocimientos relacionados con objetos, prototipos y clausuras."
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="statics/css/styles.css" />
-    <link rel="stylesheet" href="statics/css/queries.css" />
-    <!-- <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"> -->
-    <title>javaScript UNO</title>
-  </head>
-  <body>
-    <div class="contenedor">
-      <div class="tablero">
-        <div class="overlap">
-          <h2>
-            ¡BIENVENIDO!
-          </h2>
-          <p>
-            Pulsa 'JUGAR' para iniciar el juego.
-          </p>
-          <button class="jugar">JUGAR</button>
-        </div>
-        <div class="direccion">
-          <img
-            src="statics/img/flecha.png"
-            alt="direccion"
-            class="flecha"
-            id="flecha1"
-          />
-          <img
-            src="statics/img/flecha.png"
-            alt="direccion"
-            class="flecha"
-            id="flecha2"
-          />
-        </div>
-        <div class="mazos">
-          <img src="statics/img/oculto.png" class="carta" id="mazo" />
-          <span id="descartes"> </span><br />
-        </div>
 
-        <div class="panel" id="panel-jugador-0">
-          <div class="selector-colores ocultar oculto" id="selector-jugador-0">
-            <div class="verde"></div>
-            <div class="amarillo"></div>
-            <div class="azul"></div>
-            <div class="rojo"></div>
-          </div>
-          <div class="mano" id="mano-jugador-0"></div>
-          <div class="nombre" id="nombre-jugador-0">
-            <img src="/statics/img/jugador.svg" alt="Icono de Jugador">
-            <p>Jugador</p>
-            <span id="puntuacion-0">0</span>
-          </div>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="author" content="German Solano" />
+  <meta name="description"
+    content="Pequeño projecto realizadon en Javascript para poner en practica los conocimientos relacionados con objetos, prototipos y clausuras." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="statics/css/styles.css" />
+  <link rel="stylesheet" href="statics/css/queries.css" />
+  <title>javaScript UNO</title>
+</head>
 
-        <div class="panel" id="panel-jugador-1">
-          <div class="selector-colores ocultar oculto" id="selector-jugador-1">
-            <div class="verde"></div>
-            <div class="amarillo"></div>
-            <div class="azul"></div>
-            <div class="rojo"></div>
-          </div>
-          <div class="mano" id="mano-jugador-1"></div>
-          <div class="nombre" id="nombre-jugador-1">
-            <img src="/statics/img/jugador.svg" alt="Icono de Jugador">
-            <p>Jugador</p>
-            <span id="puntuacion-1">0</span>
-          </div>
-        </div>
+<body>
+  <div class="contenedor">
+    <div class="tablero">
+      <div class="overlap">
+        <h2>
+          ¡BIENVENIDO!
+        </h2>
+        <p>
+          Pulsa 'JUGAR' para iniciar el juego.
+        </p>
+        <button class="jugar">JUGAR</button>
+      </div>
+      <div class="direccion">
+        <img src="statics/img/flecha.png" class="flecha" id="flecha1" />
+        <img src="statics/img/flecha.png" class="flecha" id="flecha2" />
+      </div>
+      <div class="mazos">
+        <img src="statics/img/oculto.png" class="carta" id="mazo" />
+        <span id="descartes"> </span><br />
+      </div>
 
-        <div class="panel" id="panel-jugador-2">
-          <div class="selector-colores ocultar oculto" id="selector-jugador-2">
-            <div class="verde"></div>
-            <div class="amarillo"></div>
-            <div class="azul"></div>
-            <div class="rojo"></div>
-          </div>
-          <div class="mano" id="mano-jugador-2"></div>
-          <div class="nombre" id="nombre-jugador-2">
-            <img src="/statics/img/jugador.svg" alt="Icono de Jugador">
-            <p>Jugador</p>
-            <span id="puntuacion-2">0</span>
-          </div>
+      <div class="panel" id="panel-jugador-0">
+        <div class="selector-colores ocultar oculto" id="selector-jugador-0">
+          <div class="verde"></div>
+          <div class="amarillo"></div>
+          <div class="azul"></div>
+          <div class="rojo"></div>
         </div>
-
-        <div class="panel" id="panel-jugador-3">
-          <div class="selector-colores ocultar oculto" id="selector-jugador-3">
-            <div class="verde"></div>
-            <div class="amarillo"></div>
-            <div class="azul"></div>
-            <div class="rojo"></div>
-          </div>
-          <div class="mano" id="mano-jugador-3"></div>
-          <div class="nombre" id="nombre-jugador-3">
-            <img src="/statics/img/jugador.svg" alt="Icono de Jugador">
-            <p>Jugador</p>
-            <span id="puntuacion-3">0</span>
-          </div>
-        </div>
-
-        <div class="ayuda">
-          <h3></h3>
-          <div class="cerrar-ayuda">x</div>
-          <p></p>
+        <div class="mano" id="mano-jugador-0"></div>
+        <div class="nombre" id="nombre-jugador-0">
+          <img src="statics/img/jugador.svg" alt="Icono de Jugador">
+          <p>Jugador</p>
+          <span id="puntuacion-0">0</span>
         </div>
       </div>
+
+      <div class="panel" id="panel-jugador-1">
+        <div class="selector-colores ocultar oculto" id="selector-jugador-1">
+          <div class="verde"></div>
+          <div class="amarillo"></div>
+          <div class="azul"></div>
+          <div class="rojo"></div>
+        </div>
+        <div class="mano" id="mano-jugador-1"></div>
+        <div class="nombre" id="nombre-jugador-1">
+          <img src="statics/img/jugador.svg" alt="Icono de Jugador">
+          <p>Jugador</p>
+          <span id="puntuacion-1">0</span>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-jugador-2">
+        <div class="selector-colores ocultar oculto" id="selector-jugador-2">
+          <div class="verde"></div>
+          <div class="amarillo"></div>
+          <div class="azul"></div>
+          <div class="rojo"></div>
+        </div>
+        <div class="mano" id="mano-jugador-2"></div>
+        <div class="nombre" id="nombre-jugador-2">
+          <img src="statics/img/jugador.svg" alt="Icono de Jugador">
+          <p>Jugador</p>
+          <span id="puntuacion-2">0</span>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-jugador-3">
+        <div class="selector-colores ocultar oculto" id="selector-jugador-3">
+          <div class="verde"></div>
+          <div class="amarillo"></div>
+          <div class="azul"></div>
+          <div class="rojo"></div>
+        </div>
+        <div class="mano" id="mano-jugador-3"></div>
+        <div class="nombre" id="nombre-jugador-3">
+          <img src="statics/img/jugador.svg" alt="Icono de Jugador">
+          <p>Jugador</p>
+          <span id="puntuacion-3">0</span>
+        </div>
+      </div>
+
+      <div class="ayuda">
+        <h3></h3>
+        <div class="cerrar-ayuda">x</div>
+        <p></p>
+      </div>
     </div>
-    <script>
-      if (typeof window.queueMicrotask !== "function") {
-          window.queueMicrotask = function (callback) {
-            Promise.resolve()
-              .then(callback)
-              .catch(e => setTimeout(() => { throw e; }));
-          };
-        }
-    </script>
-    <script src="statics/js/app.js"></script>
-    <script src="statics/js/Sonidos.js"></script>
-    <script src="statics/js/Reglas.js"></script>
-    <script src="statics/js/Carta.js"></script>
-    <script src="statics/js/Mazo.js"></script>
-    <script src="statics/js/Jugador.js"></script>
-    <script src="statics/js/CPU.js"></script>
-    <script src="statics/js/Juego.js"></script>
-    <script src="statics/js/listeners.js"></script>
-  </body>
+  </div>
+  <script>
+    // Polifyll
+    if (typeof window.queueMicrotask !== "function") {
+      window.queueMicrotask = function (callback) {
+        Promise.resolve()
+          .then(callback)
+          .catch(e => setTimeout(() => { throw e; }));
+      };
+    }
+  </script>
+  <script src="statics/js/app.js"></script>
+  <script src="statics/js/Sonidos.js"></script>
+  <script src="statics/js/Reglas.js"></script>
+  <script src="statics/js/Carta.js"></script>
+  <script src="statics/js/Mazo.js"></script>
+  <script src="statics/js/Jugador.js"></script>
+  <script src="statics/js/CPU.js"></script>
+  <script src="statics/js/Juego.js"></script>
+  <script src="statics/js/listeners.js"></script>
+</body>
+
 </html>
