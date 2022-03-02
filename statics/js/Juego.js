@@ -5,7 +5,7 @@ Acciones <- ¿poder encadenar acciones?
 */
 
 const juego = {
-  jugadores: [new Jugador("Georgelyz", 0), new CPU(1), new CPU(2), new CPU(3)],
+  jugadores: [new Jugador("Jugador", 0), new CPU(1), new CPU(2), new CPU(3)],
   jugadorActivo: 0,
   estadoActual: "No iniciado",
   colorTemporal: false,
@@ -25,7 +25,7 @@ const juego = {
   },
 
   prepararJugadores() {
-    this.jugadores.forEach(jugador => {
+    this.jugadores.forEach((jugador) => {
       jugador.limpiarMano();
     });
   },
@@ -57,7 +57,7 @@ const juego = {
   },
 
   reestablecer() {
-    this.jugadores.forEach(jugador => {
+    this.jugadores.forEach((jugador) => {
       jugador.reestablecer();
     });
   },
@@ -103,7 +103,10 @@ const juego = {
     if (jugador.esCPU()) jugador.jugar();
     else {
       queueMicrotask(() => {
-        if (mazo.ultimoDescarte().valor !== "+4" && this.estadoActual === "Jugando")
+        if (
+          mazo.ultimoDescarte().valor !== "+4" &&
+          this.estadoActual === "Jugando"
+        )
           app.mostrarAyuda(
             `Es el turno de ${jugador.nombre}`,
             "Selecciona una carta para jugar."
@@ -129,10 +132,7 @@ const juego = {
 
   solicitarColor() {
     this.estadoActual = "Esperando";
-    app.mostrarAyuda(
-      this.estadoActual,
-      "Selecciona un color para continuar."
-    );
+    app.mostrarAyuda(this.estadoActual, "Selecciona un color para continuar.");
     app.alternarSelector();
   },
 
